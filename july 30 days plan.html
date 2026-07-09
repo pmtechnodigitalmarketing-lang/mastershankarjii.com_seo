@@ -1,0 +1,425 @@
+<h2 class="sr-only">Interactive 30-day SEO execution plan for mastershankarjii.com with daily tasks organized by week</h2>
+<style>
+.plan-wrap { padding: 1rem 0 2rem; }
+.week-nav { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.wbtn { font-size: 12px; padding: 5px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: background .15s; }
+.wbtn.on { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.week-panel { display: none; }
+.week-panel.on { display: block; }
+.week-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 1rem; }
+.week-title { font-size: 16px; font-weight: 500; margin: 0; }
+.week-theme { font-size: 12px; color: var(--color-text-secondary); }
+.day-grid { display: flex; flex-direction: column; gap: 8px; }
+.day-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+.day-head { display: flex; align-items: center; gap: 10px; padding: .65rem 1rem; cursor: pointer; user-select: none; }
+.day-num { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); min-width: 38px; }
+.day-label { font-size: 13px; font-weight: 500; flex: 1; }
+.day-badges { display: flex; gap: 4px; }
+.db { font-size: 10px; padding: 2px 7px; border-radius: 99px; font-weight: 500; }
+.db-tech { background: #E6F1FB; color: #0C447C; }
+.db-content { background: #EAF3DE; color: #27500A; }
+.db-local { background: #FAEEDA; color: #633806; }
+.db-eeat { background: #EEEDFE; color: #3C3489; }
+.db-links { background: #FAECE7; color: #712B13; }
+.db-ctr { background: #E1F5EE; color: #085041; }
+.day-toggle { font-size: 14px; color: var(--color-text-secondary); transition: transform .2s; }
+.day-toggle.open { transform: rotate(180deg); }
+.day-tasks { display: none; border-top: 0.5px solid var(--color-border-tertiary); }
+.day-tasks.open { display: block; }
+.task-item { display: flex; gap: 10px; align-items: flex-start; padding: .55rem 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; }
+.task-item:last-child { border-bottom: none; }
+.task-check { width: 16px; height: 16px; border-radius: 4px; border: 0.5px solid var(--color-border-secondary); flex-shrink: 0; margin-top: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .1s; }
+.task-check.done { background: #1D9E75; border-color: #1D9E75; }
+.task-check.done::after { content: ''; width: 9px; height: 6px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px,-1px); display: block; }
+.task-text { flex: 1; line-height: 1.5; color: var(--color-text-primary); }
+.task-text.done { text-decoration: line-through; color: var(--color-text-secondary); }
+.progress-bar-wrap { background: var(--color-background-secondary); border-radius: 99px; height: 6px; margin-bottom: 1.5rem; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: #1D9E75; border-radius: 99px; transition: width .3s; }
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 1.5rem; }
+.kpi-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: .75rem 1rem; }
+.kpi-l { font-size: 11px; color: var(--color-text-secondary); margin: 0 0 3px; }
+.kpi-v { font-size: 19px; font-weight: 500; margin: 0; }
+.baseline-note { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 1.25rem; line-height: 1.5; }
+</style>
+
+<div class="plan-wrap">
+
+<p class="baseline-note"><strong>Baseline (from the July 2026 audit):</strong> 1 of 27 sitemap URLs earning any impressions · 17 clicks / 1,588 impressions in 3 months · 1.07% CTR · avg. position 10.84. Root causes being fixed in this plan: 2 orphaned pages, 4 sitewide broken footer links, no dedicated Brampton page despite it driving 412 of all impressions, and service pages averaging 350–450 words.</p>
+
+<div class="kpi-row">
+  <div class="kpi-card"><p class="kpi-l">Total tasks</p><p class="kpi-v" id="total-tasks">0</p></div>
+  <div class="kpi-card"><p class="kpi-l">Completed</p><p class="kpi-v" id="done-tasks">0</p></div>
+  <div class="kpi-card"><p class="kpi-l">Progress</p><p class="kpi-v" id="pct-tasks">0%</p></div>
+  <div class="kpi-card"><p class="kpi-l">Quick wins</p><p class="kpi-v">6</p></div>
+</div>
+
+<div class="progress-label"><span>Overall 30-day completion</span><span id="prog-txt">0%</span></div>
+<div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-bar" style="width:0%"></div></div>
+
+<div class="week-nav">
+  <button class="wbtn on" onclick="showWeek(1,this)">Week 1 — fix indexation</button>
+  <button class="wbtn" onclick="showWeek(2,this)">Week 2 — meta &amp; schema</button>
+  <button class="wbtn" onclick="showWeek(3,this)">Week 3 — content &amp; local</button>
+  <button class="wbtn" onclick="showWeek(4,this)">Week 4 — links &amp; conversion</button>
+</div>
+
+<div id="w1" class="week-panel on">
+  <div class="week-header">
+    <p class="week-title">Week 1: fix the indexation crisis</p>
+    <span class="week-theme">Days 1–7 · 26 of 27 pages are invisible in Search — this is the prerequisite for everything else</span>
+  </div>
+  <div class="day-grid" id="dg1"></div>
+</div>
+
+<div id="w2" class="week-panel">
+  <div class="week-header">
+    <p class="week-title">Week 2: meta rewrites &amp; schema</p>
+    <span class="week-theme">Days 8–14 · Prepare every page to convert once it's indexed, and fix CTR on the homepage's existing rankings</span>
+  </div>
+  <div class="day-grid" id="dg2"></div>
+</div>
+
+<div id="w3" class="week-panel">
+  <div class="week-header">
+    <p class="week-title">Week 3: content depth &amp; local SEO</p>
+    <span class="week-theme">Days 15–21 · Build the Brampton page that should already exist, expand thin service pages</span>
+  </div>
+  <div class="day-grid" id="dg3"></div>
+</div>
+
+<div id="w4" class="week-panel">
+  <div class="week-header">
+    <p class="week-title">Week 4: links, EEAT &amp; conversion</p>
+    <span class="week-theme">Days 22–30 · Authority signals and turning rankings into calls/WhatsApp leads</span>
+  </div>
+  <div class="day-grid" id="dg4"></div>
+</div>
+
+</div>
+
+<script>
+const weeks = [
+  [
+    { day:1, label:"Fix the 4 broken footer links", badges:["tech"], tasks:[
+      "footer.php links to kundli-reading.php, love-problem.php, privacy.php, terms.php — none of these files exist, on EVERY page of the site",
+      "Point love-problem.php → love-back.php (correct existing file, likely a rename that broke the link)",
+      "Build privacy.php and terms.php (also an EEAT/trust signal for a site collecting WhatsApp/contact info) — or remove the links until built",
+      "Decide whether kundli-reading.php is a planned service; if not building it this month, remove the link",
+      "Crawl the site afterward (Screaming Frog free tier) and confirm 0 internal 404s remain"
+    ]},
+    { day:2, label:"Link the 2 orphan pages into navigation", badges:["tech"], tasks:[
+      "business-growth.php and health-solutions.php are fully built and in sitemap.xml but linked from NOWHERE on the site — Google can't reach them by crawling",
+      "Add both to the main services grid on services.php and/or index.php's services-card.php section",
+      "Add both to header.php nav or footer.php services list alongside the other 5 service pages already linked",
+      "Verify every one of the 9 service pages (love-back, marriage-problem, career-guidance, career-problem, family-problems, business-growth, health-solutions, spiritual-healing, black-magic-removal, psychic-reading) is reachable in ≤2 clicks from the homepage",
+      "Re-crawl to confirm 0 orphan pages remain"
+    ]},
+    { day:3, label:"Link all 10 location pages from locations.php", badges:["tech","local"], tasks:[
+      "states.php?location=X pages (ontario, toronto, vancouver, montreal, calgary, ottawa, etc.) currently rely on sitemap-only discovery",
+      "Add a visible link with descriptive anchor text for each on locations.php (e.g. \"Astrologer in Vancouver\", not just an image tile)",
+      "Confirm each link resolves and the page renders the correct city name and content",
+      "Note for Week 3: there is no dedicated Brampton page at all — flag this now, build it Day 20",
+      "Re-crawl to confirm all 10 states.php variants are reachable via real links, not just sitemap.xml"
+    ]},
+    { day:4, label:"Resubmit sitemap + request indexing", badges:["tech"], tasks:[
+      "In GSC → Sitemaps, resubmit sitemap.xml now that links are fixed",
+      "Use URL Inspection → Request Indexing individually on all 26 previously-unreachable/orphaned URLs — don't wait for organic recrawl",
+      "Document today's baseline in a changelog: 1 indexed page, 17 clicks, 1,588 impressions, 1.07% CTR, position 10.84",
+      "Screenshot the current GSC Pages report — this is the before-state you'll compare against in Week 4",
+      "Set a recurring reminder to re-pull the Pages report every 2 weeks going forward"
+    ]},
+    { day:5, label:"Heading structure + canonical audit sitewide", badges:["tech"], tasks:[
+      "Confirm every page has exactly one H1 (spot-checked pages were fine — audit the rest: contact.php, about-astrologer.php, blog.php, testimonials.php)",
+      "Confirm every page self-canonicalizes correctly (services.php, locations.php, about-us.php, contact.php were verified fine — check the remaining service and location pages)",
+      "Verify each states.php?location=X page has ITS OWN canonical (not all pointing to the base states.php)",
+      "Add H2s to any service page missing clear section headings (e.g. \"How it works\", \"FAQs\")",
+      "Fix any duplicate or missing meta descriptions found during this pass"
+    ]},
+    { day:6, label:"Mobile usability + Core Web Vitals check", badges:["tech"], tasks:[
+      "Images are already WebP at reasonable sizes (55–110KB) — good. Verify lazy-loading and explicit width/height attributes are set to avoid layout shift",
+      "Run PageSpeed Insights on the homepage plus 2 service pages (love-back.php, black-magic-removal.php) — target LCP under 2.5s, CLS under 0.1, INP under 200ms",
+      "Test the WhatsApp click-to-chat button (already present in header.php) on an actual mobile device to confirm it opens correctly",
+      "Confirm tel: links and the WhatsApp deep link both fire correctly on mobile Safari and Chrome",
+      "Test the contact form end-to-end on mobile — submission and confirmation message"
+    ]},
+    { day:7, label:"Week 1 review", badges:["tech"], tasks:[
+      "Full re-crawl to confirm: 0 broken internal links, 0 orphan pages, all 27 sitemap URLs reachable via real navigation",
+      "Confirm indexing requests were submitted for all 26 previously-invisible URLs",
+      "Document every change made this week — needed to correctly attribute what caused ranking movement later",
+      "Do not expect click/impression movement yet — 2–4 weeks is the realistic window for new pages to start appearing in GSC",
+      "Set the primary KPI to watch going forward: number of distinct URLs in the GSC Pages report (today: 1)"
+    ]}
+  ],
+  [
+    { day:8, label:"Homepage title & meta rewrite", badges:["ctr"], tasks:[
+      "Homepage is currently absorbing ALL site visibility — it's ranking for both brand terms and location terms it shouldn't have to carry alone",
+      "\"astrologer brampton\" ranks position 6.87 with 412 impressions and 0 clicks — the single biggest missed-click opportunity on the account",
+      "NEW title: \"Astrologer in Brampton | Love, Marriage & Career Astrology — Master Shankar Ji\"",
+      "NEW meta description (150–155 chars): \"Trusted Indian astrologer in Brampton for love, marriage, career & spiritual guidance. Call or WhatsApp for a confidential consultation today.\"",
+      "Keep this live only until the dedicated Brampton page (Day 20) is indexed, then transition the location-specific optimization there"
+    ]},
+    { day:9, label:"services.php + locations.php meta prep", badges:["ctr"], tasks:[
+      "Rewrite services.php title/meta to target \"astrology services near me\", \"love problem solution\", \"marriage astrology\"",
+      "Rewrite locations.php title/meta to target \"astrologer in Canada\", \"Indian astrologer Toronto/Vancouver/Calgary\"",
+      "Both already have correct canonical + OG tags in place — this is a content/copy pass, not a technical one",
+      "Add primary keyword within the first 100 words of visible body copy on both pages",
+      "These pages should start earning their own impressions once Week 1's linking fixes are indexed — good pages to monitor first"
+    ]},
+    { day:10, label:"Meta rewrites — love-back, marriage-problem, career-guidance, black-magic-removal", badges:["ctr"], tasks:[
+      "\"love-back.php\" title: \"Love Back Solutions | Get Your Ex Love Back — Master Shankar Ji Astrologer\"",
+      "\"marriage-problem.php\" title: \"Marriage Problem Solution | Astrologer for Marital Harmony — Master Shankar Ji\"",
+      "\"career-guidance.php\" title: \"Career Astrology & Guidance | Master Shankar Ji, Brampton\"",
+      "\"black-magic-removal.php\" title: \"Black Magic Removal Specialist | Master Shankar Ji — Brampton, Canada\" (matches real query: \"black magic removal near me\")",
+      "Write all meta descriptions to 150–155 characters with a clear call-to-action (\"Call or WhatsApp now\")"
+    ]},
+    { day:11, label:"Meta rewrites — remaining service pages", badges:["ctr"], tasks:[
+      "career-problem.php, family-problems.php, business-growth.php, health-solutions.php, spiritual-healing.php, psychic-reading.php — each needs a unique, keyword-matched title + meta",
+      "\"psychic-reading.php\" should directly target \"psychic near me\" and \"psychic in brampton\" — both real queries with impressions and 0 clicks currently",
+      "Ensure no two pages share the same title tag (check this sitewide — templated pages are the most common source of duplicate titles)",
+      "About-us.php and about-astrologer.php: confirm they're differentiated in purpose/title, not competing for the same query",
+      "Free tool for length-checking: moz.com/learn/seo/meta-description"
+    ]},
+    { day:12, label:"Extend schema beyond the homepage", badges:["tech"], tasks:[
+      "Homepage already has strong LocalBusiness + Person + WebSite/SearchAction + Service/Offer schema — this is genuinely good work, don't rebuild it",
+      "Add Service schema to each individual service page (love-back.php, marriage-problem.php, etc.) — currently the Offer/Service markup only lives on the homepage's OfferCatalog",
+      "Add LocalBusiness schema to the future Brampton page (Day 20) and to locations.php",
+      "Test every new schema block with Google's Rich Results Test before publishing",
+      "Do not add aggregateRating anywhere until there are 10+ real reviews to back it"
+    ]},
+    { day:13, label:"FAQ schema on top 5 service pages", badges:["tech","content"], tasks:[
+      "Add FAQ schema (with matching visible FAQ content — never schema without on-page text) to: love-back.php, marriage-problem.php, black-magic-removal.php, career-guidance.php, psychic-reading.php",
+      "4–6 real questions per page, written naturally — e.g. \"How long does it take to resolve a marriage problem through astrology?\"",
+      "This is a genuine CTR lever: FAQ rich results can meaningfully lift clicks even without a ranking change",
+      "Validate every FAQ block with Rich Results Test",
+      "Note which pages get FAQ schema so Week 3's content expansion (Day 17–19) builds the matching FAQ content in full"
+    ]},
+    { day:14, label:"Week 2 review", badges:["ctr"], tasks:[
+      "Re-request indexing in GSC for every page with updated titles/meta this week",
+      "Check whether \"astrologer brampton\" and \"astrologer in brampton\" begin showing clicks at their existing positions (6.87 / 8.69) — this is the fastest win available on the account",
+      "Confirm rich snippets are appearing for schema-enabled pages via URL Inspection",
+      "Document baseline CTR per page today — compare again in Week 4",
+      "Check the GSC Pages report — are any of the newly-linked pages starting to appear yet?"
+    ]}
+  ],
+  [
+    { day:15, label:"Google Business Profile overhaul", badges:["local"], tasks:[
+      "Confirm primary category is \"Astrologer\"; add secondary categories: \"Psychic\", \"Spiritual healer\", \"Fortune teller\"",
+      "Rewrite business description (750 char max): love, marriage, career, black magic removal, spiritual healing, Brampton/GTA service area",
+      "Add every service individually (love-back, marriage problem, career guidance, black magic removal, spiritual healing, psychic reading, health, business growth, family problems) with its own description",
+      "Upload 15–20 photos: consultation setup, logo, headshot, any ritual/pooja imagery appropriate to share publicly",
+      "Confirm NAP (name/address/phone) on GBP exactly matches the site's schema and footer"
+    ]},
+    { day:16, label:"GBP posts, Q&A, and reviews", badges:["local"], tasks:[
+      "Publish first Google Post introducing Master Shankar Ji's services with a call-to-action",
+      "Seed 8–10 Q&A pairs in the GBP Q&A section covering common client questions",
+      "Enable messaging on GBP if available for your region",
+      "Reach out to 10 past clients for a Google review with a direct review link",
+      "Respond to any existing reviews professionally and promptly"
+    ]},
+    { day:17, label:"Expand love-back.php + marriage-problem.php", badges:["content"], tasks:[
+      "Both currently run ~380–450 words — expand each to 800–1,200 words",
+      "Structure: intro → what causes the problem → how the remedy/consultation process works → FAQ (matches Day 13 schema) → testimonial → CTA",
+      "Target real query variants naturally: \"love back solution\", \"get ex back astrology\", \"marriage problem solution near me\"",
+      "Add 2 internal links each to related service pages (family-problems.php, career-guidance.php)",
+      "Add 2–3 anonymized testimonials or case studies if available"
+    ]},
+    { day:18, label:"Expand career-guidance.php + career-problem.php + business-growth.php", badges:["content"], tasks:[
+      "All three currently run 355–365 words — thin for competitive commercial queries",
+      "business-growth.php was also an orphan page until Week 1 — it needs strong content to justify the new internal links pointing to it",
+      "Expand each to 800+ words with a clear FAQ section and a distinct angle (career-guidance = general guidance, career-problem = specific obstacle-solving, business-growth = for business owners/entrepreneurs)",
+      "Make sure the three pages don't overlap so heavily in content that they compete with each other for the same queries",
+      "Add internal cross-links between all three"
+    ]},
+    { day:19, label:"Expand black-magic-removal.php, spiritual-healing.php, psychic-reading.php, health-solutions.php, family-problems.php", badges:["content"], tasks:[
+      "All currently run 360–390 words — bring each to 800–1,200 words matching the FAQ schema added in Week 2",
+      "black-magic-removal.php: target \"black magic removal near me\", \"evil spirit removal\" (both real queries in GSC data)",
+      "psychic-reading.php: target \"psychic near me\", \"psychic in brampton\", \"psychic reading\"",
+      "health-solutions.php was also an orphan page until Week 1 — same note as business-growth.php applies",
+      "Add internal links between all five and back to services.php"
+    ]},
+    { day:20, label:"Build the missing Brampton page", badges:["content","local"], tasks:[
+      "VERIFIED GAP: \"astrologer brampton\" alone drives 412 of the site's 1,588 total impressions, plus \"astrologer in brampton\" (85) and \"best astrologer in brampton\" (16/8) — yet there is no dedicated Brampton page anywhere on the site; locations-data.php lists Ontario, BC, Alberta, Quebec, Manitoba, Saskatchewan, Toronto, Vancouver, Montreal, Calgary, Ottawa, but not Brampton",
+      "Build /states.php?location=brampton (or a clean URL if feasible) as a full, unique 1,000+ word page — not the ~110-word templated block every other location page currently shares",
+      "Include: local landmarks/service-area language, testimonials, FAQ, LocalBusiness schema with Brampton in the address/areaServed",
+      "Link it prominently from the homepage and locations.php — this should become the canonical destination for all Brampton-intent traffic currently landing on the homepage",
+      "Once indexed and stable, revisit the homepage title from Day 8 and let this page carry the Brampton-specific ranking instead"
+    ]},
+    { day:21, label:"Fix the templated location pages + first blog posts", badges:["content","local"], tasks:[
+      "The 10 existing states.php?location=X pages share one ~110-word template with only the city/province name swapped — this is a duplicate-content risk once they start getting indexed",
+      "Prioritize Toronto and Vancouver (largest cities) for unique 400–600 word content this week; queue the rest for month 2",
+      "Publish first blog post: \"Signs you need an astrologer for love and relationship problems\" (800–1,000 words, links to love-back.php)",
+      "Publish second blog post: \"What to expect in your first astrology consultation with Master Shankar Ji\" (700–900 words)",
+      "Add author bio + internal links to both posts; confirm blog.php links to them"
+    ]}
+  ],
+  [
+    { day:22, label:"Local citations — batch 1", badges:["local","links"], tasks:[
+      "Submit to: Yelp, Yellow Pages Canada, Bing Places, Apple Maps, Facebook Business Page",
+      "Submit to: BBB.org, Hotfrog, Manta, Superpages, Canada411",
+      "NAP must be byte-for-byte identical across every citation — same phone format, same URL, same business name",
+      "Track every submission in a spreadsheet: platform, date, login, live URL",
+      "Some directories take 2–4 weeks to go live — submit now so they're active before Day 30"
+    ]},
+    { day:23, label:"Social profiles + Web 2.0 presence", badges:["links"], tasks:[
+      "Create/optimize Facebook Business Page, Instagram Business, YouTube channel — bio includes website link and matches NAP",
+      "Publish a short Medium.com article linking back to the site",
+      "Publish a Blogger.com post linking to spiritual-healing.php",
+      "Add social links to header.php or footer.php if not already present",
+      "Cross-post the two blog articles from Day 21 to Facebook and Instagram"
+    ]},
+    { day:24, label:"EEAT — about pages", badges:["eeat"], tasks:[
+      "Both about-us.php and about-astrologer.php exist — audit for overlap and make sure each has a distinct, clear purpose",
+      "Add Master Shankar Ji's full background: years of experience, training/lineage, areas of specialization",
+      "Add \"Serving Brampton and the GTA since [year]\" with the cities/provinces served",
+      "Add a dedicated testimonials section with 5–10 real client quotes (written permission required)",
+      "Ensure privacy.php and terms.php (built in Week 1, Day 1) are linked from about-us.php or footer — trust signals for a site collecting personal contact/WhatsApp info"
+    ]},
+    { day:25, label:"Quora + community authority building", badges:["links","eeat"], tasks:[
+      "Create a Quora presence and answer 5 astrology/relationship questions with genuinely helpful detail",
+      "Link to a relevant service page only where naturally relevant — not on every answer",
+      "Comment thoughtfully on relevant r/astrology threads before posting any links",
+      "Join Indian/South Asian diaspora Facebook groups in the GTA and introduce the practice appropriately (no spam)",
+      "Target questions like \"how does astrology help with marriage problems\" and \"is vedic astrology accurate\""
+    ]},
+    { day:26, label:"Expand remaining templated location pages", badges:["content","local"], tasks:[
+      "Bring Montreal, Calgary, and Ottawa pages up from the ~110-word template to 400–600 unique words each",
+      "Bring Ontario, British Columbia, Alberta, Quebec, Manitoba, Saskatchewan (province-level pages) to similarly unique content, differentiated from the city pages",
+      "Add FAQ schema to Toronto, Vancouver, and Brampton pages (top 3 by demand)",
+      "Cross-link all location pages from locations.php with descriptive anchor text",
+      "Re-verify each has its own canonical (checked in Week 1, re-confirm after content changes)"
+    ]},
+    { day:27, label:"2 more blog posts + interlinking", badges:["content"], tasks:[
+      "Post 3: \"Black magic removal — myths vs reality\" (1,000+ words, high commercial intent, links to black-magic-removal.php)",
+      "Post 4: \"Vedic astrology for career decisions in 2026\" (800+ words, links to career-guidance.php)",
+      "Interlink all 4 blog posts to each other and to relevant service pages",
+      "Share both new posts on Facebook and Instagram",
+      "Add blog category/tag pages if blog.php is currently a flat list — improves crawlability"
+    ]},
+    { day:28, label:"Conversion optimization", badges:["ctr"], tasks:[
+      "WhatsApp click-to-chat is already implemented in header.php — verify it's equally visible on service and location pages, not just the homepage",
+      "Add a sticky mobile \"Call / WhatsApp\" bar that stays visible while scrolling on service pages",
+      "Add trust badges near CTAs: years of experience, \"confidential consultation\", service-area coverage",
+      "Confirm the contact form (contact.php) captures which service the visitor is interested in — helps qualify leads",
+      "Add a short \"free first-question\" or consultation offer near the top of high-traffic pages (homepage, Brampton page)"
+    ]},
+    { day:29, label:"Press + outreach", badges:["links","eeat"], tasks:[
+      "Submit a press release via a free-tier service (PRLog or similar): introducing Master Shankar Ji's expanded Brampton/GTA astrology services",
+      "Identify 3–5 South Asian / Indian diaspora community sites or newsletters in the GTA for a feature pitch",
+      "Reach out to 2–3 local Brampton/Mississauga community bloggers for a guest post or feature",
+      "Sign up for HARO (helpareporter.com) and monitor for astrology/spiritual-services queries",
+      "Email 2–3 relevant podcast hosts in the spiritual/South Asian space about a guest appearance"
+    ]},
+    { day:30, label:"Full 30-day review + month 2 planning", badges:["tech"], tasks:[
+      "Pull a fresh GSC Pages report — compare number of indexed/visible URLs against Day 1 baseline (1)",
+      "Compare clicks, impressions, CTR, and average position against the Day 1 baseline (17 / 1,588 / 1.07% / 10.84)",
+      "Check specifically whether \"astrologer brampton\" and \"astrologer in brampton\" are now earning clicks",
+      "Confirm all Week 4 citations are live and NAP-consistent; follow up on any pending submissions",
+      "Identify the 5 keywords closest to page 1 and prioritize content/links for them in month 2",
+      "Set month 2 targets: all 27 pages appearing in GSC, dedicated Brampton page ranking independently of the homepage, 20+ citations live, 6+ blog posts published"
+    ]}
+  ]
+];
+
+let allTasks = [];
+const STORAGE_KEY = 'seo30done-mastershankarjii';
+let doneSet = new Set();
+
+async function loadProgress() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) {
+      doneSet = new Set(JSON.parse(result.value));
+    }
+  } catch (e) {
+    doneSet = new Set();
+  }
+  render();
+}
+
+async function saveProgress() {
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify([...doneSet]));
+  } catch (e) {
+    console.error('Storage error:', e);
+  }
+}
+
+function updateProgress() {
+  const total = allTasks.length;
+  const done = doneSet.size;
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById('total-tasks').textContent = total;
+  document.getElementById('done-tasks').textContent = done;
+  document.getElementById('pct-tasks').textContent = pct + '%';
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-txt').textContent = pct + '%';
+}
+
+function toggleTask(id) {
+  if (doneSet.has(id)) doneSet.delete(id); else doneSet.add(id);
+  const check = document.getElementById('chk-'+id);
+  const text = document.getElementById('txt-'+id);
+  if (check) check.classList.toggle('done', doneSet.has(id));
+  if (text) text.classList.toggle('done', doneSet.has(id));
+  saveProgress();
+  updateProgress();
+}
+
+function toggleDay(dayId) {
+  const tasks = document.getElementById('dt-'+dayId);
+  const arrow = document.getElementById('arr-'+dayId);
+  const open = tasks.classList.toggle('open');
+  arrow.classList.toggle('open', open);
+}
+
+function showWeek(n, btn) {
+  document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.wbtn').forEach(b => b.classList.remove('on'));
+  document.getElementById('w'+n).classList.add('on');
+  btn.classList.add('on');
+}
+
+function badgeHTML(badges) {
+  const map = { tech:'tech', content:'content', local:'local', eeat:'eeat', links:'links', ctr:'ctr' };
+  const label = { tech:'technical', content:'content', local:'local SEO', eeat:'EEAT', links:'links', ctr:'CTR' };
+  return badges.map(b => `<span class="db db-${map[b]}">${label[b]}</span>`).join('');
+}
+
+function render() {
+  document.querySelectorAll('.day-grid').forEach(g => g.innerHTML = '');
+  allTasks = [];
+  weeks.forEach((days, wi) => {
+    const grid = document.getElementById('dg'+(wi+1));
+    days.forEach(d => {
+      const dayId = 'd'+d.day;
+      d.tasks.forEach((t, ti) => {
+        const taskId = dayId+'t'+ti;
+        allTasks.push(taskId);
+      });
+      const card = document.createElement('div');
+      card.className = 'day-card';
+      const tasksHTML = d.tasks.map((t, ti) => {
+        const tid = dayId+'t'+ti;
+        const isDone = doneSet.has(tid);
+        return `<div class="task-item">
+          <div class="task-check ${isDone?'done':''}" id="chk-${tid}" onclick="toggleTask('${tid}')" role="checkbox" aria-checked="${isDone}" aria-label="Mark task done"></div>
+          <span class="task-text ${isDone?'done':''}" id="txt-${tid}">${t}</span>
+        </div>`;
+      }).join('');
+      card.innerHTML = `
+        <div class="day-head" onclick="toggleDay('${dayId}')">
+          <span class="day-num">Day ${d.day}</span>
+          <span class="day-label">${d.label}</span>
+          <div class="day-badges">${badgeHTML(d.badges)}</div>
+          <i class="ti ti-chevron-down day-toggle" id="arr-${dayId}" aria-hidden="true" style="font-size:14px;"></i>
+        </div>
+        <div class="day-tasks" id="dt-${dayId}">${tasksHTML}</div>`;
+      grid.appendChild(card);
+    });
+  });
+  updateProgress();
+}
+
+loadProgress();
+</script>
